@@ -1,0 +1,20 @@
+# Stuff for DrQA
+GLOVE_DIR=glove
+mkdir -p $GLOVE_DIR
+wget http://nlp.stanford.edu/data/glove.840B.300d.zip -O $GLOVE_DIR/glove.840B.300d.zip
+unzip $GLOVE_DIR/glove.840B.300d.zip -d $GLOVE_DIR
+
+wget https://s3.amazonaws.com/fair-data/parlai/_models/drqa/squad.mdl
+
+# Download SpaCy English language models
+pip install spacy
+python -m spacy download en
+
+git clone https://github.com/facebookresearch/ParlAI.git ParlAI/
+cd ParlAI; python setup.py develop
+cd ..
+
+pip install http://download.pytorch.org/whl/torch-0.1.12.post2-cp35-cp35m-macosx_10_7_x86_64.whl 
+pip install torchvision 
+pip install flask
+
