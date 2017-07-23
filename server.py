@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request, url_for, jsonify
 from parlai.agents.drqa.drqa import DrqaAgent
 from parlai.core.params import ParlaiParser
 import logging
@@ -14,19 +14,21 @@ app = Flask(__name__)
 # Define a route for the action of the form, for example '/hello/'
 # We are also defining which type of requests this route is
 # accepting: POST requests in this case
-@app.route('/ask/', methods=['POST'])
+@app.route('/ask', methods=['POST'])
 def ask():
-    json_dict = request.get_json()
+    json_dict = request.get_json(silent=True)
 
     article = json_dict['article']
     question = json_dict['question']
+    #print(article)
+    #print(question)
     global agent
 
     observation = {'text': '\n'.join([article, question]),
                    'episode_done': True}
     agent.observe(observation)
     reply = agent.act()
-    return json.dumps(reply)
+    return jsonify({'reply':reply})
 
 # Run the app :)
 if __name__ == '__main__':

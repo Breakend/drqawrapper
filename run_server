@@ -1,1 +1,2 @@
+source activate parlai
 python server.py -mf squad.mdl --embedding_file glove/glove.840B.300d.txt
