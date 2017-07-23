@@ -1,2 +1,9 @@
+#!/bin/bash
+
 source activate parlai
-python server.py -mf squad.mdl --embedding_file glove/glove.840B.300d.txt
+
+while sleep 1; do
+    python server.py -mf squad.mdl --embedding_file glove/glove.840B.300d.txt &> logs.log
+    echo "Server 'myserver' crashed with exit code $?.  Respawning.." >&2
+    sleep 1
+done
